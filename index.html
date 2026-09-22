@@ -76,7 +76,9 @@
   <header class="fixed inset-x-0 top-0 z-50 bg-white/10 backdrop-blur-xl border-b border-white/10 shadow-lg">
     <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
       <a href="#hero" class="flex items-center">
-        <img src="assets/logo.png" alt="Chimeraid Ecom" class="h-12 md:h-16 w-auto" />
+        <span class="text-2xl md:text-3xl font-extrabold tracking-tight whitespace-nowrap">
+          <span style="color:var(--blue)">Chime</span><span style="color:var(--lilac)">Raid</span> <span style="color:var(--blue)">Ecom</span>
+        </span>
       </a>
 
       <nav>
@@ -85,6 +87,7 @@
           <li><a class="nav-link" href="#how-it-works">Programs</a></li>
           <li><a class="nav-link" href="#wins">Wins</a></li>
           <li><a class="nav-link" href="#testimonials">Testimonials</a></li>
+          <li><a class="nav-link" href="#video-reviews">Videos</a></li>
           <li><a class="nav-link" href="#pricing">Pricing</a></li>
           <li><a class="nav-link" href="#faq">FAQ</a></li>
           <li><a class="nav-link" href="#final-cta">Contact</a></li>
@@ -104,6 +107,7 @@
         <li><a class="nav-link" href="#how-it-works">Programs</a></li>
         <li><a class="nav-link" href="#wins">Wins</a></li>
         <li><a class="nav-link" href="#testimonials">Testimonials</a></li>
+          <li><a class="nav-link" href="#video-reviews">Videos</a></li>
         <li><a class="nav-link" href="#pricing">Pricing</a></li>
         <li><a class="nav-link" href="#faq">FAQ</a></li>
         <li><a class="nav-link" href="#final-cta">Contact</a></li>
@@ -343,14 +347,6 @@
         No mystery. Four moves. Clear checkpoints. You always know what’s next.
       </p>
 
-      <!-- Quick Explainer -->
-      <button
-        class="mt-6 inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/10 border border-white/15 hover:scale-105 transition"
-        data-open="explainerModal">
-        <i class="fa-solid fa-circle-play text-purple-300 text-xl"></i>
-        <span class="font-semibold">Watch quick review</span>
-        <span class="text-white/60 text-sm">45s</span>
-      </button>
     </div>
 
     <!-- Progress Bar -->
@@ -456,26 +452,6 @@
   </div>
 
   <!-- ===================== Popups ===================== -->
-  <!-- Quick Explainer -->
-  <div id="explainerModal" class="fixed inset-0 z-[60] hidden">
-    <div class="absolute inset-0 bg-black/70"></div>
-    <div class="relative max-w-2xl mx-auto mt-24 bg-[#0b0b10] border border-white/10 rounded-2xl p-6">
-      <div class="flex items-center justify-between">
-        <h3 class="text-xl font-bold">Quick review — 45s</h3>
-        <button class="text-white/70 hover:text-white" data-close="explainerModal"><i class="fa-solid fa-xmark text-xl"></i></button>
-      </div>
-      <div class="mt-4 aspect-video w-full rounded-xl overflow-hidden bg-white/5 grid place-items-center">
-  <video src="IMG_6855.MP4" controls class="w-full h-full object-cover"></video>
-</div>
-      <div class="mt-6 text-right">
-        <a href="https://linktr.ee/CHIMERAIDECOM" target="_blank"
-           class="inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
-          Apply Now <i class="fa-solid fa-arrow-right-long"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-
   <!-- Step Modals (1–4) -->
   <div id="step1" class="fixed inset-0 z-[60] hidden">
     <div class="absolute inset-0 bg-black/70"></div>
@@ -550,7 +526,7 @@
     });
   });
   // close on backdrop click
-  document.querySelectorAll('#how-it-works [id^="step"], #explainerModal').forEach(modal => {
+  document.querySelectorAll('#how-it-works [id^="step"]').forEach(modal => {
     modal.addEventListener('click', (e) => {
       if(e.target === modal){ modal.classList.add('hidden'); }
     });
@@ -644,7 +620,7 @@
           </button>
           <button class="tier-tab px-5 py-2 rounded-full font-semibold border border-white/20 text-white hover:bg-white/10"
                   data-tier="pro">
-            Pro
+            Standard
           </button>
           <button class="tier-tab px-5 py-2 rounded-full font-semibold border border-white/20 text-white hover:bg-white/10"
                   data-tier="elite">
@@ -676,6 +652,10 @@
                   <div class="text-white/70">Time to first sale</div><div class="text-2xl font-black">7–14d</div>
                 </div>
               </div>
+              <a href="#pricing"
+                 class="mt-5 inline-flex w-full items-center justify-center px-5 py-3 rounded-full font-extrabold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
+                Get Started — $499
+              </a>
             </div>
           </div>
 
@@ -686,7 +666,7 @@
                 <div class="w-10 h-10 rounded-xl grid place-items-center bg-gradient-to-br from-[#C8A2C8] to-[#7FDBFF] text-[#0b0b10]">
                   <i class="fa-solid fa-rocket"></i>
                 </div>
-                <h3 class="text-xl font-extrabold">Pro — Scale with guardrails</h3>
+                <h3 class="text-xl font-extrabold">Standard — Scale with guardrails</h3>
               </div>
               <ul class="mt-4 space-y-2 text-white/90">
                 <li><i class="fa-solid fa-check text-blue-300 mr-2"></i>Supplier SLA + inventory sync</li>
@@ -701,6 +681,10 @@
                   <div class="text-white/70">CPA vs base</div><div class="text-2xl font-black">−19%</div>
                 </div>
               </div>
+              <a href="#pricing"
+                 class="mt-5 inline-flex w-full items-center justify-center px-5 py-3 rounded-full font-extrabold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
+                Get Standard — $999
+              </a>
             </div>
           </div>
 
@@ -726,6 +710,10 @@
                   <div class="text-white/70">Refund rate</div><div class="text-2xl font-black">&lt;1.5%</div>
                 </div>
               </div>
+              <a href="#pricing"
+                 class="mt-5 inline-flex w-full items-center justify-center px-5 py-3 rounded-full font-extrabold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
+                Get Elite — $1,999
+              </a>
             </div>
           </div>
         </div>
@@ -743,17 +731,17 @@
             <span class="ml-3 text-sm text-white/70">Training Dashboard — <span id="mockup-label">Starter</span></span>
           </div>
 
-          <!-- mockup images swap per tier (use your own screenshots later) -->
+          <!-- mockup images swap per tier — real student dashboards, not stock templates -->
           <div class="relative aspect-[16/10]">
             <img id="mockup-starter" class="absolute inset-0 w-full h-full object-cover"
-                 src="https://cdn.dribbble.com/users/1726478/screenshots/6256041/mentor-dribble.png"
-                 alt="Starter dashboard mockup">
+                 src="assets/wins/win-first-sale.jpg"
+                 alt="Starter tier: real student first-sale dashboard">
             <img id="mockup-pro" class="absolute inset-0 w-full h-full object-cover hidden"
-                 src="https://i.pinimg.com/originals/d5/06/54/d50654c847f078a719f011991cf09624.png"
-                 alt="Pro dashboard mockup">
+                 src="assets/wins/win-31k-gbp.jpg"
+                 alt="Standard tier: real student dashboard, £31,510 total sales">
             <img id="mockup-elite" class="absolute inset-0 w-full h-full object-cover hidden"
-                 src="https://cdn.shopify.com/b/shopify-brochure2-assets/9f2d46a066af45902c9dd5a8d6fa9265.jpg"
-                 alt="Elite dashboard mockup">
+                 src="assets/wins/win-39k-usd.jpg"
+                 alt="Elite tier: real student dashboard, $39,560 total sales">
             <!-- gradient overlay to match brand -->
             <div class="absolute inset-0 bg-gradient-to-tr from-[#C8A2C8]/20 via-transparent to-[#7FDBFF]/25"></div>
           </div>
@@ -810,7 +798,8 @@
           // mockup swap
           Object.values(imgs).forEach(i => i.classList.add('hidden'));
           imgs[tier].classList.remove('hidden');
-          mockLabel.textContent = tier.charAt(0).toUpperCase() + tier.slice(1);
+          const tierLabels = { starter: 'Starter', pro: 'Standard', elite: 'Elite' };
+          mockLabel.textContent = tierLabels[tier] || tier;
         });
       });
     })();
@@ -830,82 +819,82 @@
       <p class="mt-4 text-lg text-white/80">Real dashboards, real numbers, posted live by students inside our private community.</p>
     </div>
 
-    <div class="mt-12 columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-5 [column-fill:_balance]">
+    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-490-orders.jpg" alt="Student win: 490 orders, $24,499 in one week" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-490-orders.jpg" alt="Student win: 490 orders, $24,499 in one week" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$24,499</p>
           <p class="text-sm text-white/70">In the bag — 490 orders, one week</p>
         </div>
       </div>
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-39k-usd.jpg" alt="Student win: $39,560 total sales, 988 orders" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-39k-usd.jpg" alt="Student win: $39,560 total sales, 988 orders" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$39,560</p>
           <p class="text-sm text-white/70">988 orders. "That first $1 online changes everything."</p>
         </div>
       </div>
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-31k-gbp.jpg" alt="Student win: £31,510 total sales, 853 orders" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-31k-gbp.jpg" alt="Student win: £31,510 total sales, 853 orders" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">£31,510</p>
           <p class="text-sm text-white/70">853 orders in 7 days. Scaling on rules, not budget.</p>
         </div>
       </div>
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-first-sale.jpg" alt="Student win: first sale, order #1001" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-first-sale.jpg" alt="Student win: first sale, order #1001" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">Order #1001</p>
           <p class="text-sm text-white/70">First sale, day one. Every student starts here.</p>
         </div>
       </div>
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-18k-gbp.jpg" alt="Student win: £18,986 total sales, 131 orders" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-18k-gbp.jpg" alt="Student win: £18,986 total sales, 131 orders" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">£18,986</p>
           <p class="text-sm text-white/70">131 orders, 7 days. Consistency compounds.</p>
         </div>
       </div>
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-cvr-breakdown.jpg" alt="Student win: 3.6% conversion rate, 1049 completed checkouts" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-cvr-breakdown.jpg" alt="Student win: 3.6% conversion rate, 1049 completed checkouts" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">3.6% CVR</p>
           <p class="text-sm text-white/70">1,049 completed checkouts. Funnel over flash.</p>
         </div>
       </div>
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-35k-usd.jpg" alt="Student win: $35,172 total sales, 415 orders" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-35k-usd.jpg" alt="Student win: $35,172 total sales, 415 orders" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$35,172</p>
           <p class="text-sm text-white/70">415 orders, 3.6% conversion. "Can't lie, this one feels good."</p>
         </div>
       </div>
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-821eur.jpg" alt="Student win: €821.98 total sales, 35 orders" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-821eur.jpg" alt="Student win: €821.98 total sales, 35 orders" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">€821.98</p>
           <p class="text-sm text-white/70">35 orders, sessions up 291%. "Feels like a fever dream."</p>
         </div>
       </div>
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-4404-profit.jpg" alt="Student win: $4,404 net profit, up 517 percent" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-4404-profit.jpg" alt="Student win: $4,404 net profit, up 517 percent" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$4,404 profit</p>
           <p class="text-sm text-white/70">Net profit up 517% in a week.</p>
         </div>
       </div>
 
-      <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-500day-goal.jpg" alt="Student win: pushing toward $500 a day" class="w-full h-auto block" />
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center">
+        <img src="assets/wins/win-500day-goal.jpg" alt="Student win: pushing toward $500 a day" class="w-32 sm:w-40 h-32 sm:h-40 object-cover object-top flex-shrink-0" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$500/day goal</p>
           <p class="text-sm text-white/70">Milestone chase — the community shows up for every push.</p>
@@ -964,6 +953,47 @@
   </div>
 </section>
 <!-- =================== /Testimonials =================== -->
+
+<!-- =================== Video Reviews =================== -->
+<section id="video-reviews" class="relative py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+    <div class="text-center max-w-3xl mx-auto">
+      <div class="inline-block px-5 py-2 mb-4 rounded-full border border-[var(--lilac)]/50 text-[var(--lilac)]" style="background:#111523;">
+        Hear It From Them
+      </div>
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Video Reviews</h2>
+      <p class="mt-4 text-lg text-white/80">Straight talk from students, on camera, no script.</p>
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+        <div class="aspect-[9/16] bg-black">
+          <video src="IMG_1714.MP4" controls playsinline preload="metadata" class="w-full h-full object-cover"></video>
+        </div>
+        <div class="p-4">
+          <p class="font-bold">Student video review #1</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+        <div class="aspect-[9/16] bg-black">
+          <video src="IMG_6855.MP4" controls playsinline preload="metadata" class="w-full h-full object-cover"></video>
+        </div>
+        <div class="p-4">
+          <p class="font-bold">Student video review #2</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden border border-white/10 bg-white/5 border-dashed grid place-items-center min-h-[280px] sm:min-h-0">
+        <div class="text-center px-6">
+          <i class="fa-solid fa-video text-3xl text-white/30"></i>
+          <p class="mt-3 text-white/60 text-sm">Third video review slot — send one more clip and it drops in right here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- =================== /Video Reviews =================== -->
 
 <section id="pricing" class="relative py-24">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
@@ -1556,7 +1586,9 @@
         <!-- Brand / mini value -->
         <div class="lg:col-span-2">
           <div class="flex items-center gap-3">
-            <img src="assets/logo.png" alt="Chimeraid Ecom" class="h-14 w-auto" />
+            <span class="text-2xl font-extrabold tracking-tight whitespace-nowrap">
+              <span style="color:var(--blue)">Chime</span><span style="color:var(--lilac)">Raid</span> <span style="color:var(--blue)">Ecom</span>
+            </span>
           </div>
           <p class="mt-4 text-white/75">
             Operators, not influencers. Signal-based products, funnel control, rules-based scaling.
