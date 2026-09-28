@@ -21,6 +21,7 @@
     /* animated global gradient background */
     html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
   background: linear-gradient(135deg, #0A0014 0%, #0B1C33 30%, #430443 65%, #022736 100%);
   background-size: 300% 300%;
   animation: gradientShift 18s ease infinite;
@@ -72,10 +73,16 @@
     /* scroll-reveal fade-up */
     .reveal{opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease}
     .reveal.reveal-visible{opacity:1; transform:translateY(0)}
+
+    /* hide scrollbar on mobile swipe rows */
+    .no-scrollbar{scrollbar-width:none; -ms-overflow-style:none}
+    .no-scrollbar::-webkit-scrollbar{display:none}
+
   </style>
 </head>
 
 <body class="text-white">
+  <div id="scroll-progress" class="fixed top-0 left-0 h-[3px] w-0 z-[70] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]"></div>
   <!-- Header -->
   <header class="fixed inset-x-0 top-0 z-50 bg-white/10 backdrop-blur-xl border-b border-white/10 shadow-lg">
     <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
@@ -356,7 +363,7 @@
 <!-- =================== Video Reviews =================== -->
 <section id="video-reviews" class="relative pt-8 pb-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-    <div class="text-center max-w-3xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto reveal">
       <div class="inline-block px-5 py-2 mb-4 rounded-full border border-[var(--lilac)]/50 text-[var(--lilac)]" style="background:#111523;">
         Hear It From Them
       </div>
@@ -364,39 +371,92 @@
       <p class="mt-4 text-lg text-white/80">Straight talk from students, on camera, no script.</p>
     </div>
 
-    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      <div class="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+    <div id="video-scroll" class="mt-12 flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:mx-0 sm:px-0 sm:gap-6 lg:grid-cols-4 no-scrollbar">
+      <div class="video-card w-[46%] flex-shrink-0 snap-center sm:w-auto sm:flex-shrink rounded-2xl overflow-hidden border border-white/10 bg-white/5">
         <div class="aspect-[9/16] bg-black">
           <video src="IMG_1714.MP4" poster="assets/video-thumbs/thumb-review-1.jpg" controls playsinline preload="metadata" class="w-full h-full object-cover"></video>
         </div>
-        <div class="p-4">
-          <p class="font-bold">Student video review #1</p>
+        <div class="p-3 sm:p-4">
+          <p class="font-bold text-sm sm:text-base">Student video review #1</p>
         </div>
       </div>
 
-      <div class="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+      <div class="video-card w-[46%] flex-shrink-0 snap-center sm:w-auto sm:flex-shrink rounded-2xl overflow-hidden border border-white/10 bg-white/5">
         <div class="aspect-[9/16] bg-black">
           <video src="IMG_6855.MP4" poster="assets/video-thumbs/thumb-review-2.jpg" controls playsinline preload="metadata" class="w-full h-full object-cover"></video>
         </div>
-        <div class="p-4">
-          <p class="font-bold">Student video review #2</p>
+        <div class="p-3 sm:p-4">
+          <p class="font-bold text-sm sm:text-base">Student video review #2</p>
         </div>
       </div>
 
-      <div class="rounded-2xl overflow-hidden border border-white/10 bg-white/5 border-dashed grid place-items-center min-h-[280px] sm:min-h-0">
-        <div class="text-center px-6">
-          <i class="fa-solid fa-video text-3xl text-white/30"></i>
-          <p class="mt-3 text-white/60 text-sm">Video review #3 — drops in right here.</p>
+      <div class="video-card w-[46%] flex-shrink-0 snap-center sm:w-auto sm:flex-shrink rounded-2xl overflow-hidden border border-white/10 bg-white/5 border-dashed grid place-items-center min-h-[200px] sm:min-h-0">
+        <div class="text-center px-4">
+          <i class="fa-solid fa-video text-2xl sm:text-3xl text-white/30"></i>
+          <p class="mt-3 text-white/60 text-xs sm:text-sm">Video review #3 — drops in right here.</p>
         </div>
       </div>
 
-      <div class="rounded-2xl overflow-hidden border border-white/10 bg-white/5 border-dashed grid place-items-center min-h-[280px] sm:min-h-0">
-        <div class="text-center px-6">
-          <i class="fa-solid fa-video text-3xl text-white/30"></i>
-          <p class="mt-3 text-white/60 text-sm">Video review #4 — drops in right here.</p>
+      <div class="video-card w-[46%] flex-shrink-0 snap-center sm:w-auto sm:flex-shrink rounded-2xl overflow-hidden border border-white/10 bg-white/5 border-dashed grid place-items-center min-h-[200px] sm:min-h-0">
+        <div class="text-center px-4">
+          <i class="fa-solid fa-video text-2xl sm:text-3xl text-white/30"></i>
+          <p class="mt-3 text-white/60 text-xs sm:text-sm">Video review #4 — drops in right here.</p>
         </div>
       </div>
     </div>
+
+    <!-- Dot indicators (mobile only) -->
+    <div id="video-dots" class="mt-2 flex justify-center gap-2 sm:hidden">
+      <button class="video-dot w-2 h-2 rounded-full bg-white transition-all" data-index="0" aria-label="Video 1"></button>
+      <button class="video-dot w-2 h-2 rounded-full bg-white/30 transition-all" data-index="1" aria-label="Video 2"></button>
+      <button class="video-dot w-2 h-2 rounded-full bg-white/30 transition-all" data-index="2" aria-label="Video 3"></button>
+      <button class="video-dot w-2 h-2 rounded-full bg-white/30 transition-all" data-index="3" aria-label="Video 4"></button>
+    </div>
+    <script>
+      (function(){
+        const scroller = document.getElementById('video-scroll');
+        const dots = document.querySelectorAll('.video-dot');
+        const cards = document.querySelectorAll('.video-card');
+        if(!scroller || !dots.length) return;
+
+        function updateDots(){
+          const scrollerRect = scroller.getBoundingClientRect();
+          const center = scrollerRect.left + scrollerRect.width / 2;
+          let closest = 0, closestDist = Infinity;
+          cards.forEach((card, i) => {
+            const r = card.getBoundingClientRect();
+            const cardCenter = r.left + r.width / 2;
+            const dist = Math.abs(cardCenter - center);
+            if(dist < closestDist){ closestDist = dist; closest = i; }
+          });
+          dots.forEach((d, i) => {
+            if(i === closest){
+              d.classList.remove('bg-white/30'); d.classList.add('bg-white','w-6');
+            } else {
+              d.classList.remove('bg-white','w-6'); d.classList.add('bg-white/30');
+            }
+          });
+        }
+
+        let ticking = false;
+        scroller.addEventListener('scroll', () => {
+          if(!ticking){
+            requestAnimationFrame(() => { updateDots(); ticking = false; });
+            ticking = true;
+          }
+        });
+
+        dots.forEach(dot => {
+          dot.addEventListener('click', () => {
+            const i = parseInt(dot.getAttribute('data-index'), 10);
+            const card = cards[i];
+            if(card){ scroller.scrollTo({ left: card.offsetLeft - scroller.offsetLeft - 16, behavior: 'smooth' }); }
+          });
+        });
+
+        updateDots();
+      })();
+    </script>
   </div>
 </section>
 <!-- =================== /Video Reviews =================== -->
@@ -405,7 +465,7 @@
 <section id="how-it-works" class="relative pt-10 pb-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
     <!-- Header -->
-    <div class="text-center max-w-3xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto reveal">
       <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">How It Works</h2>
       <p class="mt-4 text-lg text-white/80">
         No mystery. Four moves. Clear checkpoints. You always know what’s next.
@@ -883,7 +943,7 @@
 <section id="pricing" class="relative pt-10 pb-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
     <!-- Header -->
-    <div class="text-center max-w-3xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto reveal">
       <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Pricing Plans</h2>
       <p class="mt-4 text-lg text-white/80">Clear paths that qualify buyers and keep you flexible.</p>
 
@@ -1083,138 +1143,138 @@
 </section>
 <!-- =================== /Pricing Plans / Tiers =================== -->
 <!-- =================== Student Wins =================== -->
-<section id="wins" class="relative pt-10 pb-16">
+<section id="wins" class="relative pt-10 pb-4">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-    <div class="text-center max-w-3xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto reveal">
       <div class="inline-block px-5 py-2 mb-4 rounded-full border border-[var(--lilac)]/50 text-[var(--lilac)]" style="background:#111523;">
         Straight From the Discord
       </div>
       <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Student Wins</h2>
-      <p class="mt-4 text-lg text-white/80">Real dashboards, real numbers, real messages — posted live by students inside our private community.</p>
+      <p class="mt-4 text-lg text-white/80">Real dashboards, real numbers, real messages, posted by the students who built them.</p>
     </div>
 
     <div class="mt-12 columns-2 md:columns-3 lg:columns-4 gap-5 [column-fill:_balance]">
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-490-orders.jpg" alt="Student win: 490 orders, $24,499 in one week" class="w-full h-auto block" />
+        <img src="assets/wins/win-490-orders.jpg" width="1181" height="2560" alt="Student win: 490 orders, $24,499 in one week" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$24,499</p>
-          <p class="text-sm text-white/70">In the bag — 490 orders, one week</p>
+          <p class="text-sm text-white/70">490 orders in one week.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-39k-usd.jpg" alt="Student win: $39,560 total sales, 988 orders" class="w-full h-auto block" />
+        <img src="assets/wins/win-39k-usd.jpg" width="1181" height="2560" alt="Student win: $39,560 total sales, 988 orders" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$39,560</p>
-          <p class="text-sm text-white/70">988 orders. "That first $1 online changes everything."</p>
+          <p class="text-sm text-white/70">988 orders in 30 days. “That first $1 online changes everything.”</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-31k-gbp.jpg" alt="Student win: £31,510 total sales, 853 orders" class="w-full h-auto block" />
+        <img src="assets/wins/win-31k-gbp.jpg" width="1181" height="2560" alt="Student win: £31,510 total sales, 853 orders" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">£31,510</p>
-          <p class="text-sm text-white/70">853 orders in 7 days. Scaling on rules, not budget.</p>
+          <p class="text-sm text-white/70">853 orders in 7 days.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-first-sale.jpg" alt="Student win: first sale, order #1001" class="w-full h-auto block" />
+        <img src="assets/wins/win-first-sale.jpg" width="1181" height="2560" alt="Student win: first sale, order #1001" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">Order #1001</p>
-          <p class="text-sm text-white/70">First sale, day one. Every student starts here.</p>
+          <p class="text-sm text-white/70">First sale. Every student starts here.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-18k-gbp.jpg" alt="Student win: £18,986 total sales, 131 orders" class="w-full h-auto block" />
+        <img src="assets/wins/win-18k-gbp.jpg" width="1181" height="2560" alt="Student win: £18,986 total sales, 131 orders" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">£18,986</p>
-          <p class="text-sm text-white/70">131 orders, 7 days. Consistency compounds.</p>
+          <p class="text-sm text-white/70">131 orders in 7 days.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-cvr-breakdown.jpg" alt="Student win: 3.6% conversion rate, 1049 completed checkouts" class="w-full h-auto block" />
+        <img src="assets/wins/win-cvr-breakdown.jpg" width="1181" height="2560" alt="Student win: 3.6% conversion rate, 1,049 completed checkouts" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">3.6% CVR</p>
-          <p class="text-sm text-white/70">1,049 completed checkouts. Funnel over flash.</p>
+          <p class="text-sm text-white/70">1,049 completed checkouts in 30 days.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-35k-usd.jpg" alt="Student win: $35,172 total sales, 415 orders" class="w-full h-auto block" />
+        <img src="assets/wins/win-35k-usd.jpg" width="1181" height="2560" alt="Student win: $35,172 total sales, 415 orders" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$35,172</p>
-          <p class="text-sm text-white/70">415 orders, 3.6% conversion. "Can't lie, this one feels good."</p>
+          <p class="text-sm text-white/70">415 orders at a 3.6% conversion rate.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-821eur.jpg" alt="Student win: €821.98 total sales, 35 orders" class="w-full h-auto block" />
+        <img src="assets/wins/win-821eur.jpg" width="1181" height="2560" alt="Student win: €821.98 total sales, 35 orders" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">€821.98</p>
-          <p class="text-sm text-white/70">35 orders, sessions up 291%. "Feels like a fever dream."</p>
+          <p class="text-sm text-white/70">35 orders, sessions up 291%.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-4404-profit.jpg" alt="Student win: $4,404 net profit, up 517 percent" class="w-full h-auto block" />
+        <img src="assets/wins/win-4404-profit.jpg" width="1181" height="2560" alt="Student win: $4,404 net profit, up 517 percent" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$4,404 profit</p>
-          <p class="text-sm text-white/70">Net profit up 517% in a week.</p>
+          <p class="text-sm text-white/70">Net profit up 517%.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/testimonials/tm-12k-one-day.jpg" alt="Student win: $12,951.15 total sales, 293 orders" class="w-full h-auto block" />
+        <img src="assets/testimonials/tm-12k-one-day.jpg" width="950" height="1280" alt="Student win: $12,951.15 total sales, 293 orders" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">$12,951</p>
-          <p class="text-sm text-white/70">"Easiest money I ever made — thank you so much."</p>
+          <p class="text-sm text-white/70">One day of sales. “Easiest money I ever made.”</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/testimonials/tm-10k-milestone.jpg" alt="Student win: 10,000 order Shopify milestone" class="w-full h-auto block" />
+        <img src="assets/testimonials/tm-10k-milestone.jpg" width="629" height="1280" alt="Shopify 10K milestone award" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
-          <p class="text-2xl font-black text-[var(--blue)]">10,000 orders</p>
-          <p class="text-sm text-white/70">Milestone hit — the whole community showed up for it.</p>
+          <p class="text-2xl font-black text-[var(--blue)]">10K milestone</p>
+          <p class="text-sm text-white/70">Shopify milestone award unlocked.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/wins/win-500day-goal.jpg" alt="Student win: pushing toward $500 a day" class="w-full h-auto block" />
+        <img src="assets/wins/win-500day-goal.jpg" width="1181" height="2560" alt="Student win: pushing toward $500 a day" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
-          <p class="text-2xl font-black text-[var(--blue)]">$500/day goal</p>
-          <p class="text-sm text-white/70">Milestone chase — the community shows up for every push.</p>
+          <p class="text-2xl font-black text-[var(--blue)]">Sales landing</p>
+          <p class="text-sm text-white/70">“Go for $500/day.”</p>
         </div>
       </div>
 
     </div>
 
     <!-- Extra cards, revealed by "View More" -->
-    <div id="wins-more" class="hidden mt-0 columns-2 md:columns-3 lg:columns-4 gap-5 [column-fill:_balance]">
+    <div id="wins-more" class="hidden columns-2 md:columns-3 lg:columns-4 gap-5 [column-fill:_balance]">
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/testimonials/tm-goat-shoutout.jpg" alt="Discord shoutout: Ecom expert, 10 of 10" class="w-full h-auto block" />
+        <img src="assets/testimonials/tm-goat-shoutout.jpg" width="1309" height="1202" alt="Mentee message: Ecom expert, 10 of 10" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">10/10</p>
-          <p class="text-sm text-white/70">"That you are the GOAT — Ecom expert, 10 of 10."</p>
+          <p class="text-sm text-white/70">“Ecom expert, 10 of 10.” Feedback from a mentee.</p>
         </div>
       </div>
 
       <div class="mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-white/10 bg-black">
-        <img src="assets/testimonials/tm-great-reviews.jpg" alt="Screenshot: I heard great reviews about you" class="w-full h-auto block" />
+        <img src="assets/testimonials/tm-great-reviews.jpg" width="591" height="1280" alt="Message: I heard great reviews about you" class="w-full h-auto block" loading="lazy" />
         <div class="p-4">
           <p class="text-2xl font-black text-[var(--blue)]">Word of mouth</p>
-          <p class="text-sm text-white/70">"I heard great reviews about you" — before they even joined.</p>
+          <p class="text-sm text-white/70">“I heard great reviews about you.”</p>
         </div>
       </div>
 
     </div>
 
-    <div class="mt-8 text-center">
+    <div class="mt-2 text-center">
       <button onclick="document.getElementById('wins-more').classList.remove('hidden'); this.remove();"
               class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold border border-white/20 text-white hover:bg-white/10 transition">
         View More <i class="fa-solid fa-chevron-down"></i>
@@ -1225,7 +1285,7 @@
 <!-- =================== /Student Wins =================== -->
 
 <!-- ===================== Final CTA / Urgency Close ===================== -->
-<section id="final-cta" class="relative py-20">
+<section id="final-cta" class="relative pt-8 pb-10">
   <div class="absolute inset-0 -z-10 pointer-events-none"
        style="background: radial-gradient(60% 60% at 50% 40%, rgba(200,162,200,.20) 0%, rgba(127,219,255,.18) 35%, rgba(8,0,20,.0) 70%);"></div>
 
@@ -1372,10 +1432,10 @@
   </script>
 </section>
 <!-- =================== /Final CTA / Urgency Close =================== -->
-<section id="faq" class="relative py-24">
+<section id="faq" class="relative pt-10 pb-24">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
     <!-- Header -->
-    <div class="text-center max-w-3xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto reveal">
       <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">FAQ / Objection Handling</h2>
       <p class="mt-4 text-lg text-white/80">Still on the fence? Read this, watch quick proofs, decide fast.</p>
     </div>
@@ -1778,20 +1838,35 @@
 </footer>
 <!-- =================== /Advanced Footer =================== -->
 
-<!-- scroll-reveal engine -->
+<!-- scroll-reveal engine + progress bar -->
 <script>
   (function(){
     const items = document.querySelectorAll('.reveal');
-    if(!items.length) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if(e.isIntersecting){
-          e.target.classList.add('reveal-visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-    items.forEach(el => io.observe(el));
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if(e.isIntersecting){ e.target.classList.add('reveal-visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+      items.forEach(el => io.observe(el));
+    } else {
+      items.forEach(el => el.classList.add('reveal-visible'));
+    }
+
+    const bar = document.getElementById('scroll-progress');
+    if(bar){
+      let tick = false;
+      const upd = () => {
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (h > 0 ? Math.min(window.scrollY / h * 100, 100) : 0) + '%';
+        tick = false;
+      };
+      const req = () => { if(!tick){ requestAnimationFrame(upd); tick = true; } };
+      window.addEventListener('scroll', req, {passive:true});
+      window.addEventListener('resize', req);
+      window.addEventListener('load', req);
+      upd();
+    }
   })();
 </script>
 
