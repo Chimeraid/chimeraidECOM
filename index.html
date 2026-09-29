@@ -88,6 +88,45 @@
     .no-scrollbar{scrollbar-width:none; -ms-overflow-style:none}
     .no-scrollbar::-webkit-scrollbar{display:none}
 
+
+    /* aurora glow blobs (hero) */
+    .aurora-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;-webkit-mask-image:linear-gradient(to bottom,#000 75%,transparent 100%);mask-image:linear-gradient(to bottom,#000 75%,transparent 100%)}
+    .aurora{position:absolute;border-radius:50%;filter:blur(80px)}
+    .aurora-1{width:440px;height:440px;left:6%;top:-100px;background:var(--lilac);opacity:.35;animation:auroraDrift1 15s ease-in-out infinite alternate}
+    .aurora-2{width:400px;height:400px;right:4%;top:20px;background:var(--blue);opacity:.30;animation:auroraDrift2 18s ease-in-out infinite alternate}
+    @keyframes auroraDrift1{to{transform:translate(70px,50px) scale(1.15)}}
+    @keyframes auroraDrift2{to{transform:translate(-60px,45px) scale(1.1)}}
+
+    /* flowing gradient text */
+    .text-flow{background-size:200% 100%; background-position:0 0; animation:textFlow 2.6s ease-out 1 both}
+    @keyframes textFlow{from{background-position:0 0} to{background-position:100% 0}}
+
+    /* shimmer + pulse on primary CTAs */
+    .btn-shimmer{position:relative;overflow:hidden;box-shadow:0 10px 32px -8px rgba(127,219,255,.5)}
+    .btn-shimmer::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.65),transparent);transform:translateX(0) skewX(-20deg);animation:ctaShimmer 2.8s ease-in-out infinite;will-change:transform}
+    @keyframes ctaShimmer{to{transform:translateX(475%) skewX(-20deg)}}
+
+    /* spinning conic border for the featured pricing plan */
+    .spin-border{position:relative;border-radius:1.5rem;padding:2px;overflow:hidden;isolation:isolate;background:#0b0b10}
+    .spin-border::before{content:"";position:absolute;inset:-75%;background:conic-gradient(var(--lilac),var(--blue),var(--lilac));animation:spinRotate 6s linear infinite;will-change:transform}
+    .spin-border>*{position:relative;z-index:1}
+    @keyframes spinRotate{to{transform:rotate(360deg)}}
+
+    /* count-up + funnel bars */
+    .reveal .f-bar{width:0}
+    .reveal.reveal-visible .f-bar{width:var(--w) !important}
+    .f-bar{transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+
+    /* magnetic buttons: nudge toward the cursor, spring back on leave */
+    .magnetic-btn{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+    .magnetic-btn.snap-back{transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+
+    /* stop paying for the hero's ambient motion once it's scrolled out of view */
+    #hero.offscreen .aurora,#hero.offscreen .text-flow,#hero.offscreen .btn-shimmer::after{animation-play-state:paused !important}
+
+    @media (prefers-reduced-motion: reduce){
+      .aurora,.text-flow,.btn-shimmer::after,.spin-border::before,.magnetic-btn{animation:none !important;transition:none !important}
+    }
   </style>
 </head>
 
@@ -162,8 +201,10 @@
       <div class="absolute inset-0 bg-black/60"></div>
     </div>
 
+    <div class="aurora-wrap"><div class="aurora aurora-1"></div><div class="aurora aurora-2"></div></div>
+
     <!-- Content -->
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-7rem)] flex items-center justify-center">
+    <div class="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-7rem)] flex items-center justify-center">
       <div class="text-center max-w-3xl animate-float">
         <!-- Kicker -->
         <div class="inline-block px-5 py-2 mb-6 rounded-full border border-[var(--lilac)]/50 text-[var(--lilac)]"
@@ -173,10 +214,10 @@
 
         <!-- Headline -->
         <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
-          <span class="block bg-clip-text text-transparent bg-gradient-to-r from-white via-[var(--blue)] to-[var(--lilac)]">
+          <span class="block text-flow bg-clip-text text-transparent bg-gradient-to-r from-white via-[var(--blue)] to-[var(--lilac)]">
             Build, Scale and Automate
           </span>
-          <span class="block bg-clip-text text-transparent bg-gradient-to-r from-[var(--lilac)] via-[var(--blue)] to-white mt-2">
+          <span class="block text-flow bg-clip-text text-transparent bg-gradient-to-r from-[var(--lilac)] via-[var(--blue)] to-white mt-2">
             With CHIMERAID ECOM
           </span>
         </h1>
@@ -189,7 +230,7 @@
         <!-- CTAs -->
         <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
           <a href="https://linktr.ee/CHIMERAIDECOM"
-             class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-4 text-lg font-extrabold rounded-full text-[#0b0b10] bg-gradient-to-r from-[var(--lilac)] to-[var(--blue)] shadow-lg hover:scale-105 transition-all duration-300">
+             class="btn-shimmer magnetic-btn w-full sm:w-auto inline-flex items-center justify-center px-7 py-4 text-lg font-extrabold rounded-full text-[#0b0b10] bg-gradient-to-r from-[var(--lilac)] to-[var(--blue)] shadow-lg hover:scale-105 transition-all duration-300">
             Apply Now
           </a>
 
@@ -1025,14 +1066,14 @@
 
         <div class="mt-8">
           <a href="https://linktr.ee/CHIMERAIDECOM" target="_blank"
-             class="inline-flex w-full items-center justify-center px-6 py-3 rounded-full font-extrabold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
+             class="magnetic-btn inline-flex w-full items-center justify-center px-6 py-3 rounded-full font-extrabold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
             Get Starter
           </a>
         </div>
       </article>
 
       <!-- Pro • Most Popular -->
-      <article class="relative rounded-3xl p-1 bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF] hover:shadow-2xl hover:shadow-blue-400/30 transition">
+      <article class="spin-border relative hover:shadow-2xl hover:shadow-blue-400/30 transition">
         <div class="absolute -top-3 right-4 px-3 py-1 rounded-full text-xs font-bold bg-white text-[#0b0b10] shadow">
           MOST POPULAR
         </div>
@@ -1065,7 +1106,7 @@
 
           <div class="mt-8">
             <a href="https://linktr.ee/CHIMERAIDECOM" target="_blank"
-               class="inline-flex w-full items-center justify-center px-6 py-3 rounded-full font-extrabold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
+               class="magnetic-btn inline-flex w-full items-center justify-center px-6 py-3 rounded-full font-extrabold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
               Get Standard
             </a>
           </div>
@@ -1102,7 +1143,7 @@
 
         <div class="mt-8">
           <a href="https://linktr.ee/CHIMERAIDECOM" target="_blank"
-             class="inline-flex w-full items-center justify-center px-6 py-3 rounded-full font-extrabold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
+             class="magnetic-btn inline-flex w-full items-center justify-center px-6 py-3 rounded-full font-extrabold text-[#0b0b10] bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF]">
             Get Elite
           </a>
         </div>
@@ -1362,12 +1403,12 @@
     <!-- CTA buttons -->
     <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
       <a href="https://linktr.ee/CHIMERAIDECOM" target="_blank"
-         class="inline-flex items-center justify-center px-7 py-4 rounded-full font-extrabold text-[#0b0b10] text-lg bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF] shadow-xl hover:scale-105 transition">
+         class="magnetic-btn inline-flex items-center justify-center px-7 py-4 rounded-full font-extrabold text-[#0b0b10] text-lg bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF] shadow-xl hover:scale-105 transition">
         Apply Now
       </a>
       <a href="https://wa.me/19717570193?text=Hi%20ChimeRaid%2C%20I%27d%20like%20to%20apply%20for%20the%20mentorship"
          target="_blank"
-         class="inline-flex items-center justify-center px-6 py-4 rounded-full font-semibold border border-white/20 bg-white/5 hover:bg-white/10 transition">
+         class="magnetic-btn inline-flex items-center justify-center px-6 py-4 rounded-full font-semibold border border-white/20 bg-white/5 hover:bg-white/10 transition">
         <i class="fa-brands fa-whatsapp text-green-400 text-xl mr-2"></i> DM on WhatsApp
       </a>
     </div>
@@ -1387,7 +1428,7 @@
 
 </section>
 <!-- =================== /Final CTA / Urgency Close =================== -->
-<section id="faq" class="relative pt-10 pb-24">
+<section id="faq" class="relative pt-10 pb-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
     <!-- Header -->
     <div class="text-center max-w-3xl mx-auto reveal">
@@ -1564,11 +1605,15 @@
     <!-- Bottom CTA -->
     <div class="mt-10 text-center">
       <a href="https://linktr.ee/CHIMERAIDECOM" target="_blank"
-         class="inline-flex items-center justify-center px-8 py-4 rounded-full font-extrabold text-[#0b0b10] text-lg bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF] shadow-xl hover:scale-105 transition">
+         class="magnetic-btn inline-flex items-center justify-center px-8 py-4 rounded-full font-extrabold text-[#0b0b10] text-lg bg-gradient-to-r from-[#C8A2C8] to-[#7FDBFF] shadow-xl hover:scale-105 transition">
         Still got a blocker? Apply and ask it live
       </a>
       <div class="mt-3 text-white/70 text-sm">Secure application. Operators only.</div>
-      <div class="mt-2 text-white/70 text-sm">Prefer email? <a href="#support" class="underline hover:text-white">Contact support</a></div>
+      <div class="mt-5">
+        <a href="#support" class="magnetic-btn inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-white border border-white/20 bg-white/10 hover:bg-white/20 transition-colors">
+          <i class="fa-solid fa-envelope"></i> Prefer email? Contact support
+        </a>
+      </div>
     </div>
   </div>
  <!-- FAQ script -->
@@ -1617,7 +1662,6 @@
   </script>
 </section>
 
-<!-- ===================== Advanced Footer ===================== -->
 <!-- ===================== Contact Support ===================== -->
 <section id="support" class="relative pt-10 pb-16">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
@@ -1630,21 +1674,7 @@
     </div>
 
     <div class="reveal mt-10 rounded-2xl border border-white/15 bg-white/5 p-5 sm:p-8">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl border border-white/10 bg-black/20 px-5 py-4">
-        <div class="flex items-center gap-4 text-center sm:text-left">
-          <span class="hidden sm:grid w-12 h-12 rounded-xl place-items-center bg-gradient-to-br from-[#C8A2C8] to-[#7FDBFF] text-[#0b0b10]"><i class="fa-solid fa-envelope text-lg"></i></span>
-          <div>
-            <div class="text-xs uppercase tracking-wider text-white/60">Support email</div>
-            <a href="mailto:admin@chimeraid.com" class="text-xl sm:text-2xl font-extrabold break-all hover:text-[var(--blue)] transition">admin@chimeraid.com</a>
-          </div>
-        </div>
-        <button id="copy-email" type="button"
-                class="inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold border border-white/20 bg-white/10 hover:bg-white/20 transition">
-          <i class="fa-regular fa-copy"></i> <span id="copy-email-label">Copy email</span>
-        </button>
-      </div>
-
-      <div class="mt-5 grid gap-3 sm:grid-cols-2">
+      <div class="grid gap-3 sm:grid-cols-2">
         <a href="mailto:admin@chimeraid.com?subject=Question%20before%20applying&amp;body=Hi%20ChimeRaid%20team%2C%0D%0A%0D%0AMy%20question%3A%0D%0A%0D%0A%0D%0AMy%20experience%20with%20Shopify%20%28none%20/%20learning%20/%20running%20a%20store%29%3A%0D%0A" class="group flex items-start gap-4 rounded-xl border border-white/10 bg-white/5 p-4 hover:border-[var(--blue)]/50 hover:bg-white/10 transition">
           <span class="w-10 h-10 shrink-0 rounded-xl grid place-items-center bg-gradient-to-br from-[#C8A2C8] to-[#7FDBFF] text-[#0b0b10]"><i class="fa-solid fa-circle-question"></i></span>
           <span class="flex-1">
@@ -1689,25 +1719,6 @@
     </div>
   </div>
 
-  <script>
-    (function(){
-      const btn = document.getElementById('copy-email'), label = document.getElementById('copy-email-label');
-      if(!btn) return;
-      const done = () => { label.textContent = 'Copied!'; setTimeout(() => label.textContent = 'Copy email', 2000); };
-      btn.addEventListener('click', () => {
-        const text = 'admin@chimeraid.com';
-        if(navigator.clipboard && window.isSecureContext){
-          navigator.clipboard.writeText(text).then(done).catch(fallback);
-        } else fallback();
-        function fallback(){
-          const t = document.createElement('textarea'); t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
-          document.body.appendChild(t); t.select();
-          try { document.execCommand('copy'); done(); } catch(e) { label.textContent = 'Press Ctrl+C'; }
-          t.remove();
-        }
-      });
-    })();
-  </script>
 </section>
 <!-- =================== /Contact Support =================== -->
 
@@ -1875,19 +1886,84 @@
 </footer>
 <!-- =================== /Advanced Footer =================== -->
 
+<!-- magnetic buttons: follow the cursor within their own bounds, spring back on leave -->
+<script>
+  (function(){
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return; // skip on touch devices
+    const strength = 0.35, max = 14;
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      let pending = null;
+      btn.addEventListener('mousemove', e => {
+        if (pending) return; // collapse rapid mousemoves to one update per frame
+        pending = requestAnimationFrame(() => {
+          const r = btn.getBoundingClientRect();
+          let dx = (e.clientX - (r.left + r.width / 2)) * strength;
+          let dy = (e.clientY - (r.top + r.height / 2)) * strength;
+          dx = Math.max(-max, Math.min(max, dx));
+          dy = Math.max(-max, Math.min(max, dy));
+          btn.classList.remove('snap-back');
+          btn.style.transform = `translate(${dx}px, ${dy}px)`;
+          pending = null;
+        });
+      });
+      btn.addEventListener('mouseleave', () => {
+        if (pending) { cancelAnimationFrame(pending); pending = null; }
+        btn.classList.add('snap-back');
+        btn.style.transform = 'translate(0, 0)';
+      });
+    });
+  })();
+</script>
+
+<!-- pause the hero's ambient animations once it's scrolled out of view, so they
+     don't keep costing frames while browsing the rest of the page -->
+<script>
+  (function(){
+    const hero = document.getElementById('hero');
+    if (!hero || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => hero.classList.toggle('offscreen', !e.isIntersecting)),
+      { threshold: 0 }
+    );
+    io.observe(hero);
+  })();
+</script>
+
 <!-- scroll-reveal engine + progress bar -->
 <script>
   (function(){
     const items = document.querySelectorAll('.reveal');
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // count-up numbers, run once per element when its .reveal parent appears
+    const fmt = (v, d) => v.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
+    function runCount(el){
+      const end = parseFloat(el.dataset.count), d = parseInt(el.dataset.decimals || '0', 10);
+      const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      if(reduceMotion){ el.textContent = pre + fmt(end, d) + suf; return; }
+      const dur = 1500, t0 = performance.now();
+      const step = t => {
+        const p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = pre + fmt(end * e, d) + suf;
+        if(p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
     if('IntersectionObserver' in window){
       const io = new IntersectionObserver((entries) => {
         entries.forEach(e => {
-          if(e.isIntersecting){ e.target.classList.add('reveal-visible'); io.unobserve(e.target); }
+          if(e.isIntersecting){
+            e.target.classList.add('reveal-visible');
+            e.target.querySelectorAll('[data-count]').forEach(runCount);
+            io.unobserve(e.target);
+          }
         });
       }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
       items.forEach(el => io.observe(el));
     } else {
-      items.forEach(el => el.classList.add('reveal-visible'));
+      items.forEach(el => { el.classList.add('reveal-visible'); el.querySelectorAll('[data-count]').forEach(runCount); });
     }
 
     const bar = document.getElementById('scroll-progress');
